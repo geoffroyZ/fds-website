@@ -1,4 +1,4 @@
-import { client } from '@/sanity/lib/client';
+import { client, isSanityConfigured } from '@/sanity/lib/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -14,21 +14,93 @@ export const metadata: Metadata = {
   },
 };
 
+interface Project {
+  _id: string;
+  title: string;
+  shortDescription?: string;
+  category?: string;
+  demoUrl?: string;
+  githubUrl?: string;
+  mainImage?: {
+    asset: {
+      url: string;
+    };
+  };
+}
+
+// Default projects when Sanity is not configured
+const defaultProjects: Project[] = [
+  {
+    _id: '1',
+    title: 'E-commerce Platform',
+    shortDescription: 'Boutique en ligne moderne avec paiement sécurisé',
+    category: 'E-commerce',
+    demoUrl: '#',
+    githubUrl: '#',
+    mainImage: {
+      asset: {
+        url: '/images/portfolio/ecommerce-platform.svg'
+      }
+    }
+  },
+  {
+    _id: '2',
+    title: 'Mobile Banking App',
+    shortDescription: 'Application mobile de gestion bancaire',
+    category: 'Mobile',
+    demoUrl: '#',
+    githubUrl: '#',
+    mainImage: {
+      asset: {
+        url: '/images/portfolio/mobile-banking.svg'
+      }
+    }
+  },
+  {
+    _id: '3',
+    title: 'Corporate Website',
+    shortDescription: 'Site web vitrine pour entreprise internationale',
+    category: 'Web',
+    demoUrl: '#',
+    githubUrl: '#',
+    mainImage: {
+      asset: {
+        url: '/images/portfolio/corporate-website.svg'
+      }
+    }
+  }
+];
+
 export default async function PortfolioPage() {
-  const projects = await client.fetch(`*[_type == "project"] | order(_createdAt desc) {
-    _id,
-    title,
-    shortDescription,
-    category,
-    demoUrl,
-    githubUrl,
-    mainImage
-  }`);
+  // Check if Sanity is configured
+  const sanityReady = isSanityConfigured() && client;
+  
+  let projects: Project[] = defaultProjects;
+
+  if (sanityReady) {
+    try {
+      const data = await client!.fetch(`*[_type == "project"] | order(_createdAt desc) {
+        _id,
+        title,
+        shortDescription,
+        category,
+        demoUrl,
+        githubUrl,
+        mainImage
+      }`);
+      
+      if (data && data.length > 0) {
+        projects = data;
+      }
+    } catch (error) {
+      console.warn('Erreur lors du chargement des données Sanity:', error);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">

@@ -1,0 +1,89 @@
+<svg width="300" height="128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="strategygrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="128" fill="url(#strategygrad)" rx="8"/>
+  
+  <!-- Strategy chart -->
+  <g opacity="0.8">
+    <!-- Chart background -->
+    <rect x="40" y="30" width="80" height="68" fill="rgba(0,0,0,0.2)" rx="4"/>
+    
+    <!-- Chart bars -->
+    <rect x="50" y="70" width="12" height="20" fill="rgba(79, 172, 254, 0.8)" rx="2">
+      <animate attributeName="height" from="20" to="35" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="y" from="70" to="55" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="68" y="60" width="12" height="30" fill="rgba(240, 147, 251, 0.8)" rx="2">
+      <animate attributeName="height" from="30" to="25" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="y" from="60" to="65" dur="2.5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="86" y="65" width="12" height="25" fill="rgba(79, 172, 254, 0.8)" rx="2">
+      <animate attributeName="height" from="25" to="40" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="y" from="65" to="50" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="104" y="55" width="12" height="35" fill="rgba(240, 147, 251, 0.8)" rx="2">
+      <animate attributeName="height" from="35" to="30" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="y" from="55" to="60" dur="2.2s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Chart line -->
+    <polyline points="56,75 74,65 92,70 110,60" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"/>
+    <circle cx="56" cy="75" r="3" fill="#FFF" opacity="0.8"/>
+    <circle cx="74" cy="65" r="3" fill="#FFF" opacity="0.8"/>
+    <circle cx="92" cy="70" r="3" fill="#FFF" opacity="0.8"/>
+    <circle cx="110" cy="60" r="3" fill="#FFF" opacity="0.8"/>
+  </g>
+  
+  <!-- Target/Goal symbol -->
+  <g opacity="0.8">
+    <circle cx="180" cy="64" r="25" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+    <circle cx="180" cy="64" r="18" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    <circle cx="180" cy="64" r="10" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+    <circle cx="180" cy="64" r="4" fill="rgba(255,255,255,0.8)"/>
+    
+    <!-- Animated arrow -->
+    <path d="M165,64 L175,64" stroke="rgba(255,255,255,0.8)" stroke-width="3" marker-end="url(#arrowhead)">
+      <animate attributeName="opacity" from="0" to="1" dur="1.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Strategy nodes -->
+  <g opacity="0.6">
+    <circle cx="230" cy="40" r="8" fill="rgba(79, 172, 254, 0.6)"/>
+    <circle cx="250" cy="55" r="6" fill="rgba(240, 147, 251, 0.6)"/>
+    <circle cx="240" cy="75" r="7" fill="rgba(79, 172, 254, 0.6)"/>
+    <circle cx="260" cy="90" r="5" fill="rgba(240, 147, 251, 0.6)"/>
+    
+    <!-- Connection lines -->
+    <line x1="230" y1="40" x2="250" y2="55" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <line x1="250" y1="55" x2="240" y2="75" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <line x1="240" y1="75" x2="260" y2="90" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  </g>
+  
+  <!-- Floating particles -->
+  <circle cx="30" cy="100" r="1.5" fill="rgba(255,255,255,0.6)">
+    <animate attributeName="cy" from="100" to="30" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" from="1" to="0" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="270" cy="30" r="2" fill="rgba(255,255,255,0.6)">
+    <animate attributeName="cy" from="30" to="100" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" from="1" to="0" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Tech symbols -->
+  <text x="150" y="115" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.8)" opacity="0.7">Analytics</text>
+</svg>

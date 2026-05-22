@@ -1,4 +1,4 @@
-import { client } from '@/sanity/lib/client';
+import { client, isSanityConfigured } from '@/sanity/lib/client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -14,18 +14,54 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Home() {
-  const home = await client.fetch(`*[_type == "homePage"][0]`);
-  const services = await client.fetch(`*[_type == "service"]`);
-  const testimonials = await client.fetch(`*[_type == "testimonial" && featured == true] | order(_createdAt desc)`);
+// Default content when Sanity is not configured
+const defaultContent = {
+  title: 'Full Digital Solution',
+  subtitle: 'Transformez votre entreprise avec des solutions digitales innovantes',
+  description: 'Nous concevons des solutions digitales sur mesure pour propulser votre entreprise au Burkina Faso et en Afrique de l\'Ouest.',
+};
 
-  if (!home) return <div className="p-6 animate-fade-in-up">Chargement...</div>;
+export default async function Home() {
+  // Check if Sanity is configured
+  const sanityReady = isSanityConfigured() && client;
+  
+  let home = defaultContent;
+  let services: unknown[] = [];
+  let testimonials: unknown[] = [];
+
+  if (sanityReady) {
+    try {
+      const [homeData, servicesData, testimonialsData] = await Promise.all([
+        client!.fetch(`*[_type == "homePage"][0]`),
+        client!.fetch(`*[_type == "service"]`),
+        client!.fetch(`*[_type == "testimonial" && featured == true] | order(_createdAt desc)`),
+      ]);
+      
+      if (homeData) home = homeData;
+      if (servicesData) services = servicesData;
+      if (testimonialsData) testimonials = testimonialsData;
+    } catch (error) {
+      console.warn('Erreur lors du chargement des données Sanity:', error);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-gray-800 flex flex-col">
       {/* Hero Section */}
       <header className="relative gradient-bg py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+        
+        {/* Hero Image Background */}
+        <div className="absolute inset-0 opacity-20">
+          <Image
+            src="/images/hero/tech-background.svg"
+            alt="Transformation digitale"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        
         <div className="relative max-w-5xl mx-auto px-4 text-center animate-fade-in-up">
           <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 tracking-tight">
             {home.title}
@@ -33,6 +69,35 @@ export default async function Home() {
           <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
             {home.subtitle}
           </p>
+          
+          {/* Hero Feature Images */}
+          <div className="grid grid-cols-3 gap-4 mb-10 max-w-2xl mx-auto">
+            <div className="relative h-24 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/hero/web-development.svg"
+                alt="Développement web"
+                fill
+                className="object-cover hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative h-24 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/hero/mobile-app.svg"
+                alt="Application mobile"
+                fill
+                className="object-cover hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative h-24 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/hero/digital-strategy.svg"
+                alt="Stratégie digitale"
+                fill
+                className="object-cover hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+          </div>
+          
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Link
               href="/contact"
@@ -71,11 +136,44 @@ export default async function Home() {
                 className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-lg hover:shadow-2xl transition-all group hover:scale-105 animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" style={{ backgroundColor: 'var(--fds-blue)' }}>
-                  <span className="text-white text-2xl">✦</span>
+                <div className="w-full h-32 rounded-xl overflow-hidden mb-6 group-hover:scale-105 transition-transform">
+                  <Image
+                    src={index === 0 ? "/images/services/web-dev-tech.svg" : index === 1 ? "/images/services/mobile-tech.svg" : "/images/services/database-tech.svg"}
+                    alt={service.title}
+                    width={300}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-gray-800">{service.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{service.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Team Section */}
+        <section className="mb-24">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            Notre Équipe
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { name: 'Abdoulaye ZERBO', role: 'Fondateur & Directeur Technique', initials: 'AZ' },
+              { name: 'Marie SOME', role: 'Directrice Artistique', initials: 'MS' },
+              { name: 'Jean B. OUEDRAOGO', role: 'Développeur Full Stack', initials: 'JO' },
+              { name: 'Fatou SAWADOGO', role: 'Chef de Projet', initials: 'FS' }
+            ].map((member, index) => (
+              <div
+                key={index}
+                className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-white/20 shadow-lg hover:shadow-2xl transition-all group hover:scale-105 animate-fade-in-up text-center"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span className="text-white text-2xl font-bold">{member.initials}</span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-800 mb-2">{member.name}</h3>
+                <p className="text-blue-600 text-sm">{member.role}</p>
               </div>
             ))}
           </div>

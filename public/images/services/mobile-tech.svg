@@ -1,0 +1,86 @@
+<svg width="400" height="160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mobilegrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="appgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop:opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="160" fill="url(#mobilegrad)" rx="12"/>
+  
+  <!-- Phone mockup -->
+  <rect x="50" y="30" width="80" height="140" fill="#1a1a1a" rx="8" opacity="0.9"/>
+  <rect x="55" y="40" width="70" height="120" fill="#000" rx="4"/>
+  <rect x="60" y="45" width="60" height="110" fill="#111827" rx="2"/>
+  <rect x="65" y="50" width="50" height="100" fill="url(#appgrad)" rx="2"/>
+  
+  <!-- App screen content -->
+  <text x="90" y="75" font-family="monospace" font-size="8" fill="#FFF" opacity="0.9">FDS App</text>
+  <rect x="70" y="85" width="35" height="6" fill="#D1FAE5" rx="1"/>
+  <rect x="70" y="95" width="40" height="6" fill="#D1FAE5" rx="1"/>
+  <rect x="70" y="105" width="30" height="6" fill="#D1FAE5" rx="1"/>
+  
+  <circle cx="90" cy="125" r="8" fill="#FFF" opacity="0.8"/>
+  <circle cx="90" cy="125" r="12" fill="url(#appgrad)" opacity="0.6"/>
+  <circle cx="90" cy="125" r="8" fill="#FFF"/>
+  
+  <!-- Tablet mockup -->
+  <rect x="180" y="40" width="100" height="120" fill="#1a1a1a" rx="6" opacity="0.9"/>
+  <rect x="185" y="48" width="90" height="104" fill="#000" rx="3"/>
+  <rect x="190" y="52" width="80" height="90" fill="url(#appgrad)" rx="2"/>
+  
+  <!-- Tablet screen content -->
+  <text x="195" y="67" font-family="monospace" font-size="10" fill="#FFF" opacity="0.9">FDS Portal</text>
+  <rect x="195" y="80" width="70" height="8" fill="#D1FAE5" rx="1"/>
+  <rect x="195" y="92" width="60" height="8" fill="#D1FAE5" rx="1"/>
+  <rect x="195" y="104" width="65" height="8" fill="#D1FAE5" rx="1"/>
+  <rect x="195" y="116" width="55" height="8" fill="#D1FAE5" rx="1"/>
+  <rect x="195" y="128" height="8" fill="#D1FAE5" rx="1"/>
+  
+  <!-- Floating UI elements -->
+  <g opacity="0.6">
+    <rect x="100" y="60" width="30" height="30" fill="rgba(79, 172, 254, 0.3)" rx="6" transform="rotate(45 115 75)">
+      <animateTransform attributeName="transform" type="rotate" from="45 115 75" to="405 115 75" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="230" y="70" width="25" height="25" fill="rgba(79, 172, 254, 0.3)" rx="5" transform="rotate(-30 242 82)">
+      <animateTransform attributeName="transform" type="rotate" from="-30 242 82" to="330 242 82" dur="8s" repeatCount="defindefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Connection lines -->
+  <line x1="130" y1="100" x2="180" y2="100" stroke="rgba(79, 172, 254, 0.5)" stroke-width="2" opacity="0.6"/>
+  <line x1="280" y1="100" x2="330" y2="100" stroke="rgba(79, 172, 254, 0.5)" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Tech symbols -->
+  <text x="320" y="100" font-family="monospace" font-size="16" fill="rgba(79, 172, 254, 0.7)" opacity="0.8">&lt;/&gt;</text>
+  <text x="320" y="120" font-family="monospace" font-size="14" fill="rgba(79, 172, 254, 0.7)" opacity="0.6">{ }</text>
+  
+  <!-- Animated particles -->
+  <g opacity="0.7">
+    <circle cx="90" cy="75" r="2" fill="#4facfe">
+      <animate attributeName="cy" from="75" to="50" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="230" cy="95" r="2" fill="#00f2fe">
+      <animate attributeName="cy" from="95" to="120" dur="2.5s" repeatCount="defindefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="2.5s repeatCount="defindefinite"/>
+    </circle>
+    <circle cx="160" cy="110" r="1.5" fill="#f093fb">
+      <animate attributeName="cy" from="110" to="90" dur="2s" repeatCount="defindefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="2s repeatCount="defindefinite"/>
+    </circle>
+  </g>
+</svg>

@@ -9,8 +9,13 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const handleLinkClick = () => {
+    // Fermer le menu mobile si ouvert
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200/50 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-gray-200/50 shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -35,14 +40,77 @@ export default function Header() {
 
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <Link href="/" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link 
+                href="/" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
                 Accueil
               </Link>
-              <Link href="/a-propos" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link 
+                href="/a-propos" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/a-propos' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
                 À propos
               </Link>
-              <Link href="/portfolio" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link 
+                href="/services" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/services' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
+                Services
+              </Link>
+              <Link 
+                href="/portfolio" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/portfolio' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
                 Portfolio
+              </Link>
+              <Link 
+                href="/equipe" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/equipe' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
+                Équipe
+              </Link>
+              <Link 
+                href="/tarifs" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/tarifs' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
+                Tarifs
+              </Link>
+              <Link 
+                href="/blog" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/blog' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
+                Blog
+              </Link>
+              <Link 
+                href="/faq" 
+                className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/faq' ? 'text-blue-600 bg-blue-50' : ''
+                }`}
+                onClick={handleLinkClick}
+              >
+                FAQ
               </Link>
               <Link
                 href="/contact"
@@ -51,6 +119,7 @@ export default function Header() {
                     ? 'bg-white text-blue-600 border-2 border-blue-600'
                     : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-purple-600 hover:to-blue-600'
                 }`}
+                onClick={handleLinkClick}
               >
                 Contact
               </Link>
@@ -81,14 +150,93 @@ export default function Header() {
       {/* Mobile menu */}
       <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-md border-t border-gray-200/50">
-          <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+          <Link 
+            href="/" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
             Accueil
           </Link>
-          <Link href="/a-propos" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+          <Link 
+            href="/a-propos" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/a-propos' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
             À propos
           </Link>
-          <Link href="/portfolio" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+          <Link 
+            href="/services" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/services' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
+            Services
+          </Link>
+          <Link 
+            href="/portfolio" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/portfolio' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
             Portfolio
+          </Link>
+          <Link 
+            href="/equipe" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/equipe' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
+            Équipe
+          </Link>
+          <Link 
+            href="/tarifs" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/tarifs' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
+            Tarifs
+          </Link>
+          <Link 
+            href="/blog" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/blog' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
+            Blog
+          </Link>
+          <Link 
+            href="/faq" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              pathname === '/faq' 
+                ? 'text-blue-600 bg-blue-50' 
+                : 'text-gray-700 hover:text-blue-600'
+            }`}
+          >
+            FAQ
           </Link>
           <Link
             href="/contact"

@@ -1,0 +1,16 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="officegrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F3F4F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E5E7EB;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#officegrad)"/>
+  <rect x="50" y="100" width="120" height="80" fill="#035ABC" rx="8"/>
+  <rect x="200" y="120" width="120" height="60" fill="#7C3AED" rx="8"/>
+  <rect x="350" y="90" width="120" height="90" fill="#10B981" rx="8"/>
+  <rect x="100" y="250" width="400" height="100" fill="rgba(3, 90, 188, 0.1)" rx="12"/>
+  <text x="300" y="305" font-family="Arial, sans-serif" font-size="24" fill="#374151" text-anchor="middle">Espace de Travail</text>
+  <circle cx="150" cy="50" r="20" fill="rgba(124, 58, 237, 0.2)"/>
+  <circle cx="450" cy="50" r="15" fill="rgba(16, 185, 129, 0.2)"/>
+</svg>

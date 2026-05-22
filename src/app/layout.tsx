@@ -1,6 +1,8 @@
 import { Poppins } from 'next/font/google';
 import Header from './components/Header';
 import GoogleAnalytics from './components/GoogleAnalytics';
+import NavigationLoader from './components/NavigationLoader';
+import LoadingOverlay from './components/LoadingOverlay';
 import "./globals.css";
 
 const poppins = Poppins({
@@ -71,9 +73,11 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${poppins.variable} font-sans antialiased`}>
+        <LoadingOverlay />
+        <NavigationLoader />
         <GoogleAnalytics />
         <Header />
-        <main className="pt-16">{children}</main>
+        <main className="pt-20">{children}</main>
       </body>
     </html>
   );

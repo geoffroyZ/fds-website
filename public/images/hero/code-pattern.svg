@@ -1,0 +1,40 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="codegrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#111827;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1F2937;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#codegrad)"/>
+  
+  <!-- Code lines background -->
+  <g opacity="0.1">
+    <text x="50" y="100" font-family="monospace" font-size="16" fill="#3B82F6">const digitalSolution = {</text>
+    <text x="50" y="130" font-family="monospace" font-size="16" fill="#10B981">  innovation: true,</text>
+    <text x="50" y="160" font-family="monospace" font-size="16" fill="#F59E0B">  expertise: 'full-stack',</text>
+    <text x="50" y="190" font-family="monospace" font-size="16" fill="#EF4444">  location: 'Burkina Faso'</text>
+    <text x="50" y="220" font-family="monospace" font-size="16" fill="#3B82F6">};</text>
+  </g>
+  
+  <g opacity="0.08">
+    <text x="1200" y="400" font-family="monospace" font-size="16" fill="#8B5CF6">function transform() {</text>
+    <text x="1200" y="430" font-family="monospace" font-size="16" fill="#10B981">  return success;</text>
+    <text x="1200" y="460" font-family="monospace" font-size="16" fill="#8B5CF6">}</text>
+  </g>
+  
+  <!-- Tech symbols -->
+  <circle cx="300" cy="300" r="100" fill="none" stroke="rgba(59, 130, 246, 0.2)" stroke-width="2"/>
+  <circle cx="300" cy="300" r="80" fill="none" stroke="rgba(59, 130, 246, 0.15)" stroke-width="1"/>
+  <circle cx="300" cy="300" r="60" fill="none" stroke="rgba(59, 130, 246, 0.1)" stroke-width="1"/>
+  
+  <rect x="1400" y="600" width="200" height="150" fill="none" stroke="rgba(124, 58, 237, 0.2)" stroke-width="2" rx="10"/>
+  <rect x="1420" y="620" width="160" height="110" fill="none" stroke="rgba(124, 58, 237, 0.15)" stroke-width="1" rx="8"/>
+  
+  <!-- Floating code brackets -->
+  <text x="600" y="200" font-family="monospace" font-size="120" fill="rgba(59, 130, 246, 0.1)">&lt;/&gt;</text>
+  <text x="1000" y="800" font-family="monospace" font-size="100" fill="rgba(124, 58, 237, 0.08){ }</text>
+  
+  <!-- Connection lines -->
+  <path d="M300,300 Q600,200 900,300" stroke="rgba(59, 130, 246, 0.1)" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+  <path d="M900,300 Q1200,400 1500,600" stroke="rgba(124, 58, 237, 0.1)" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+</svg>

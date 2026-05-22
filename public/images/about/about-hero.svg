@@ -1,0 +1,92 @@
+<svg width="1920" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aboutgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="techgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="600" fill="url(#aboutgrad)"/>
+  
+  <!-- Floating geometric shapes -->
+  <circle cx="200" cy="150" r="80" fill="rgba(79, 70, 249, 0.1)" opacity="0.6">
+    <animate attributeName="cy" from="150" to="130" dur="4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" from="0.6" to="0.3" dur="4s" repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="1600" cy="400" r="120" fill="rgba(240, 147, 251, 0.1)" opacity="0.5">
+    <animate attributeName="cy" from="400" to="420" dur="5s" repeatCount="indefinite" />
+    <animate attributeName="opacity" from="0.5" to="0.2" dur="5s" repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="900" cy="100" r="60" fill="rgba(79, 172, 254, 0.1)" opacity="0.4">
+    <animate attributeName="cy" from="100" to="120" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" from="0.4" to="0.1" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Tech elements -->
+  <g opacity="0.3">
+    <!-- Code brackets -->
+    <text x="100" y="300" font-family="monospace" font-size="80" fill="rgba(255,255,255,0.4)" opacity="0.8">&lt;/&gt;</text>
+    <text x="1400" y="200" font-family="monospace" font-size="60" fill="rgba(255,255,255,0.4)" opacity="0.6">{ }</text>
+    <text x="300" y="450" font-family="monospace" font-size="70" fill="rgba(255,255,255,0.4)" opacity="0.7">( )</text>
+    <text x="1500" y="350" font-family="monospace" font-size="90" fill="rgba(255,255,255,0.4)" opacity="0.5">[ ]</text>
+  </g>
+  
+  <!-- Abstract tech lines -->
+  <g stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none">
+    <path d="M100,200 Q400,100 700,200 T1300,200" opacity="0.5"/>
+    <path d="M200,400 Q600,300 1000,400 T1800,400" opacity="0.4"/>
+    <path d="M150,300 Q500,200 850,300 T1550,300" opacity="0.3"/>
+  </g>
+  
+  <!-- Dots pattern -->
+  <g fill="rgba(255,255,255,0.1)">
+    <circle cx="300" cy="250" r="3"/>
+    <circle cx="500" cy="350" r="3"/>
+    <circle cx="700" cy="200" r="3"/>
+    <circle cx="900" cy="400" r="3"/>
+    <circle cx="1100" cy="300" r="3"/>
+    <circle cx="1300" cy="450" r="3"/>
+    <circle cx="1500" cy="250" r="3"/>
+    <circle cx="1700" cy="350" r="3"/>
+    <circle cx="400" cy="150" r="3"/>
+    <circle cx="600" cy="500" r="3"/>
+    <circle cx="800" cy="100" r="3"/>
+    <circle cx="1000" cy="550" r="3"/>
+    <circle cx="1200" cy="150" r="3"/>
+    <circle cx="1400" cy="500" r="3"/>
+    <circle cx="1600" cy="100" r="3"/>
+    <circle cx="1800" cy="450" r="3"/>
+  </g>
+  
+  <!-- Floating particles -->
+  <g opacity="0.6">
+    <circle cx="250" cy="200" r="2" fill="#4facfe">
+      <animate attributeName="cy" from="200" to="50" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="400" r="2" fill="#00f2fe">
+      <animate attributeName="cy" from="400" to="550" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="650" cy="300" r="2" fill="#4facfe">
+      <animate attributeName="cy" from="300" to="150" dur="7s" repeatCount="defindef"/>
+      <animate attributeName="opacity" from="1" to="0" dur="7s" repeatCount="defindef"/>
+    </circle>
+    <circle cx="850" cy="500" r="2" fill="#00f2fe">
+      <animate attributeName="cy" from="500" to="350" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1050" cy="200" r="2" fill="#f093fb">
+      <animate attributeName="cy" from="200" to="350" dur="9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="9s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

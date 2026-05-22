@@ -1,0 +1,164 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="maingrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="nodegrad">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:0.2" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="1920" height="1080" fill="url(#maingrad)"/>
+  
+  <!-- Animated network nodes -->
+  <g opacity="0.8">
+    <!-- Central hub -->
+    <circle cx="960" cy="540" r="60" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="r" from="60" to="80" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" from="0.8" to="0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Connected nodes -->
+    <circle cx="300" cy="200" r="40" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.6" to="0.3" dur="4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="1620" cy="200" r="40" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.6" to="0.3" dur="4s" repeatCount="defindefinite" />
+    </circle>
+    <circle cx="200" cy="880" r="45" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.7" to="0.4" dur="3.5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="1720" cy="880" r="45" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.7" to="0.4" dur="3.5s" repeatCount="defindefinite" />
+    </circle>
+    <circle cx="600" cy="400" r="35" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.5" to="0.2" dur="5s" repeatCount="defindefinite" />
+    </circle>
+    <circle cx="1320" cy="400" r="35" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.5" to="0.2" dur="5s" repeatCount="defindefinite" />
+    </circle>
+    <circle cx="960" cy="150" r="30" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.4" to="0.1" dur="6s" repeatCount="defindefinite" />
+    </circle>
+    <circle cx="960" cy="930" r="30" fill="url(#nodegrad)" filter="url(#glow)">
+      <animate attributeName="opacity" from="0.4" to="0.1" dur="6s" repeatCount="defindefinite" />
+    </circle>
+  </g>
+  
+  <!-- Connection lines -->
+  <g stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" opacity="0.6">
+    <path d="M300,200 L960,540" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M960,540 L1620,200" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M200,880 L960,540" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M960,540 L1720,880" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M600,400 L960,540" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s repeatCount="indefinite"/>
+    </path>
+    <path d="M960,540 L1320,400" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s repeatCount="defindefinite"/>
+    </path>
+    <path d="M960,540 L960,150" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s repeatCount="defindefinite"/>
+    </path>
+    <path d="M960,540 L960,930" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="20s repeatCount="defindefinite"/>
+    </path>
+  </g>
+  
+  <!-- Floating code elements -->
+  <g opacity="0.4" font-family="monospace" font-size="24" fill="rgba(255,255,255,0.6)">
+    <text x="280" y="190" opacity="0.8">&lt;/&gt;</text>
+    <text x="1640" y="190" opacity="0.8">{ }</text>
+    <text x="180" y="870" opacity="0.7">( )</text>
+    <text x="1740" y="870" opacity="0.7">{ }</text>
+    <text x="580" y="390" opacity="0.6">[ ]</text>
+    <text x="1340" y="390" opacity="0.6">[ ]</text>
+    <text x="940" y="140" opacity="0.5">const</text>
+    <text x="940" y="920" opacity="0.5">;</text>
+  </g>
+  
+  <!-- Abstract geometric shapes -->
+  <g opacity="0.2">
+    <rect x="100" y="100" width="80" height="80" fill="rgba(255,255,255,0.1)" rx="16" transform="rotate(45 140 140)">
+      <animateTransform attributeName="transform" type="rotate" from="45 140 140" to="405 140 140" dur="20s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="1600" y="800" width="100" height="100" fill="rgba(255,255,255,0.1)" rx="20" transform="rotate(-30 1650 850)">
+      <animateTransform attributeName="transform" type="rotate" from="-30 1650 850" to="330 1650 850" dur="25s" repeatCount="defindefinite"/>
+    </rect>
+    <rect x="850" y="50" width="60" height="60" fill="rgba(255,255,255,0.1)" rx="12" transform="rotate(60 880 80)">
+      <animateTransform attributeName="transform" type="rotate" from="60 880 80" to="420 880 80" dur="15s" repeatCount="defindefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Data particles -->
+  <g opacity="0.7">
+    <circle cx="400" cy="300" r="3" fill="#4facfe">
+      <animate attributeName="cy" from="300" to="250" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="800" cy="600" r="2" fill="#00f2fe">
+      <animate attributeName="cy" from="600" to="650" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1200" cy="200" r="3" fill="#f093fb">
+      <animate attributeName="cy" from="200" to="150" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="600" cy="800" r="2" fill="#764ba2">
+      <animate attributeName="cy" from="800" to="850" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="5s" repeatCount="defindefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Binary rain effect -->
+  <g opacity="0.3" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.4)">
+    <text x="50" y="100">01101001 10110010</text>
+    <text x="150" y="120">11010101 01010110</text>
+    <text x="250" y="140">00110101 11100100</text>
+    <text x="350" y="160">10101010 01010101</text>
+    <text x="450" y="180">11110000 10101010</text>
+    <text x="550" y="200">01010101 11010101</text>
+    <text x="650" y="220">10110010 01011001</text>
+    <text x="750" y="240">01101001 10110010</text>
+    <text x="850" y="260">11010101 01010101</text>
+    <text x="950" y="280">00110101 11100100</text>
+    <text x="1050" y="300">10101010 01010101</text>
+    <text x="1150" y="320">11110000 10101010</text>
+    <text x="1250" y="340">01010101 11010101</text>
+    <text x="1350" y="360">10110010 01011001</text>
+    <text x="1450" y="380">01101001 10110010</text>
+    <text x="1550" y="400">11010101 01010101</text>
+    <text x="1650" y="420">00110101 11100100</text>
+    <text x="1750" y="440">10101010 01010101</text>
+    
+    <text x="50" y="900">01101001 10110010</text>
+    <text x="150" y="920">11010101 01010101</text>
+    <text x="250" y="940">00110101 11100100</text>
+    <text x="350" y="960">10101010 01010101</text>
+    <text x="450" y="980">11110000 10101010</text>
+    <text x="550" y="1000">01010101 11010101</text>
+    <text x="650" y="1020">10110010 01011001</text>
+    <text x="750" y="1040">01101001 10110010</text>
+  </g>
+</svg>

@@ -1,36 +1,71 @@
-import { client } from '@/sanity/lib/client';
+import { client, isSanityConfigured } from '@/sanity/lib/client';
 import Image from 'next/image';
 
-export default async function AboutPage() {
-  const about = await client.fetch(`*[_type == "about"][0] {
-    title,
-    subtitle,
-    overview,
-    mission,
-    values,
-    approachTitle,
-    approachDescription,
-    founderName,
-    founderRole,
-    founderImage
-  }`);
+// Default content when Sanity is not configured
+const defaultAbout = {
+  title: 'À propos de FDS',
+  subtitle: 'Votre partenaire digital au Burkina Faso',
+  overview: 'FDS (Full Digital Solution) est une entreprise burkinabè spécialisée dans le développement de solutions digitales sur mesure. Nous accompagnons les entreprises et organisations dans leur transformation digitale avec des services adaptés à leurs besoins.',
+  mission: 'Démocratiser l\'accès aux technologies digitales pour les entreprises africaines et contribuer au développement économique du Burkina Faso através de l\'innovation numérique.',
+  values: [
+    'Innovation',
+    'Excellence',
+    'Proximité',
+    'Fiabilité'
+  ],
+  approachTitle: 'Notre approche',
+  approachDescription: 'Nous adoptons une approche collaborative pour comprendre vos besoins spécifiques et proposer des solutions personnalisées qui répondent à vos objectifs commerciaux.',
+  founderName: '',
+  founderRole: '',
+  founderImage: null,
+};
 
-  if (!about) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 animate-pulse"></div>
-          <p className="text-gray-600">Page "À propos" non configurée.</p>
-        </div>
-      </div>
-    );
+export default async function AboutPage() {
+  // Check if Sanity is configured
+  const sanityReady = isSanityConfigured() && client;
+  
+  let about = defaultAbout;
+
+  if (sanityReady) {
+    try {
+      const data = await client!.fetch(`*[_type == "about"][0] {
+        title,
+        subtitle,
+        overview,
+        mission,
+        values,
+        approachTitle,
+        approachDescription,
+        founderName,
+        founderRole,
+        founderImage
+      }`);
+      
+      if (data) {
+        about = { ...defaultAbout, ...data };
+      }
+    } catch (error) {
+      console.warn('Erreur lors du chargement des données Sanity:', error);
+    }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+        
+        {/* Hero Background Image */}
+        <div className="absolute inset-0 opacity-20">
+          <Image
+            src="/images/about/about-hero.svg"
+            alt="À propos de FDS"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 animate-fade-in">
@@ -46,14 +81,56 @@ export default async function AboutPage() {
         </div>
       </div>
 
+      {/* Team Section - Moved up */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              Notre Équipe
+            </h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { name: 'Abdoulaye ZERBO', role: 'Fondateur & Directeur Technique', initials: 'AZ' },
+              { name: 'Marie SOME', role: 'Directrice Artistique', initials: 'MS' },
+              { name: 'Jean B. OUEDRAOGO', role: 'Développeur Full Stack', initials: 'JO' },
+              { name: 'Fatou SAWADOGO', role: 'Chef de Projet', initials: 'FS' }
+            ].map((member, index) => (
+              <div
+                key={index}
+                className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/20 shadow-lg hover:shadow-2xl transition-all group hover:scale-105 animate-fade-in-up text-center"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span className="text-white text-2xl font-bold">{member.initials}</span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-800 mb-2">{member.name}</h3>
+                <p className="text-blue-600 text-sm">{member.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Overview */}
         {about.overview && (
           <div className="mb-20">
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20">
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
-                {about.overview}
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20">
+                <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                  {about.overview}
+                </p>
+              </div>
+              <div className="relative h-64 lg:h-96 rounded-3xl overflow-hidden shadow-xl">
+                <Image
+                  src="/images/about/tech-office.svg"
+                  alt="Espace de travail FDS"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
           </div>
         )}

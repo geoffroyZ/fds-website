@@ -1,0 +1,15 @@
+<svg width="400" height="160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="service6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6B7280;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4B5563;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="160" fill="url(#service6)" rx="12"/>
+  <text x="200" y="85" font-family="Arial, sans-serif" font-size="24" fill="white" text-anchor="middle">Maintenance & Support</text>
+  <rect x="100" y="40" width="8" height="80" fill="rgba(255,255,255,0.3)" rx="4"/>
+  <rect x="150" y="50" width="8" height="70" fill="rgba(255,255,255,0.3)" rx="4"/>
+  <rect x="200" y="35" width="8" height="85" fill="rgba(255,255,255,0.3)" rx="4"/>
+  <rect x="250" y="45" width="8" height="75" fill="rgba(255,255,255,0.3)" rx="4"/>
+  <rect x="300" y="55" width="8" height="65" fill="rgba(255,255,255,0.3)" rx="4"/>
+</svg>
