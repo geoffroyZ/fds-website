@@ -1,4 +1,5 @@
 import { client, isSanityConfigured } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
 import Image from 'next/image';
 
 // Default content when Sanity is not configured
@@ -209,7 +210,7 @@ export default async function AboutPage() {
                   <div className="relative">
                     <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-white/50 shadow-2xl">
                       <Image
-                        src={about.founderImage.asset.url + '?w=160&h=160&fit=crop'}
+                        src={urlFor(about.founderImage).width(160).height(160).url()}
                         alt={about.founderName || 'Fondateur'}
                         width={160}
                         height={160}
