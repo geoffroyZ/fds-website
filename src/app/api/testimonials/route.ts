@@ -1,29 +1,65 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from 'next-sanity';
 
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: '2025-04-06',
-  useCdn: false, // Important: disable CDN for write operations
-  token: process.env.SANITY_AUTH_TOKEN, // Server-side token with write permissions
-});
+function isAuthorized(request: NextRequest): boolean {
+  const secret = process.env.INTERNAL_API_SECRET;
+  if (!secret) {
+    return false;
+  }
+  const header = request.headers.get('x-api-key');
+  return header === secret;
+}
 
 export async function POST(request: NextRequest) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  const token = process.env.SANITY_AUTH_TOKEN;
+
+  if (!projectId || !token) {
+    return NextResponse.json(
+      { error: 'Sanity write credentials not configured' },
+      { status: 503 }
+    );
+  }
+
+  const client = createClient({
+    projectId,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-04-06',
+    useCdn: false,
+    token,
+  });
+
   try {
     const body = await request.json();
 
-    const testimonialData = {
-      _type: 'testimonial',
-      name: body.name,
-      company: body.company || undefined,
-      role: body.role || undefined,
-      content: body.content,
-      rating: parseInt(body.rating),
-      featured: true, // New testimonials are featured by default
-    };
+    if (!body.name?.trim() || !body.content?.trim()) {
+      return NextResponse.json(
+        { error: 'name and content are required' },
+        { status: 400 }
+      );
+    }
 
-    const result = await client.create(testimonialData);
+    const rating = parseInt(body.rating, 10);
+    if (Number.isNaN(rating) || rating < 1 || rating > 5) {
+      return NextResponse.json(
+        { error: 'rating must be between 1 and 5' },
+        { status: 400 }
+      );
+    }
+
+    const result = await client.create({
+      _type: 'testimonial',
+      name: body.name.trim(),
+      company: body.company?.trim() || undefined,
+      role: body.role?.trim() || undefined,
+      content: body.content.trim(),
+      rating,
+      featured: Boolean(body.featured),
+    });
 
     return NextResponse.json({ success: true, id: result._id });
   } catch (error) {

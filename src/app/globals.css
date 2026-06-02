@@ -3,7 +3,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --fds-blue: #035ABC;
+  /* Charte FDS — https://fds-website-ashen.vercel.app/ */
+  --fds-blue: #035abc;
+  --fds-blue-dark: #024a96;
+  --fds-gray: #737373;
+  --fds-gradient-start: #035abc;
+  --fds-gradient-end: #0284c7;
+}
+
+@theme inline {
+  --color-fds-blue: var(--fds-blue);
+  --color-fds-blue-dark: var(--fds-blue-dark);
+  --color-fds-gray: var(--fds-gray);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -62,5 +73,38 @@ html {
 /* Gradient backgrounds */
 .gradient-bg {
   background: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
+}
+
+/* Boutons et accents marque */
+.btn-fds-primary {
+  background: linear-gradient(
+    135deg,
+    var(--fds-gradient-start) 0%,
+    var(--fds-gradient-end) 100%
+  );
+  color: #fff;
+}
+
+.btn-fds-primary:hover {
+  background: linear-gradient(
+    135deg,
+    var(--fds-blue-dark) 0%,
+    var(--fds-blue) 100%
+  );
+}
+
+.text-fds-brand {
+  color: var(--fds-blue);
+}
+
+.text-fds-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--fds-gradient-start),
+    var(--fds-gradient-end)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 

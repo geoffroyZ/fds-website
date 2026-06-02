@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { brand } from '@/lib/brand';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,17 +22,24 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Image
-                src="/images_logo/fds logo.jpeg"
-                alt="FDS Logo"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
+                src={brand.logo.src}
+                alt={brand.logo.alt}
+                width={brand.logo.width}
+                height={brand.logo.height}
+                className="h-10 w-auto object-contain"
+                priority
               />
               <div className="flex flex-col">
-                <span className="text-2xl font-bold" style={{ color: '#035ABC' }}>
+                <span
+                  className="text-2xl font-bold"
+                  style={{ color: brand.colors.blue }}
+                >
                   FDS
                 </span>
-                <span className="text-xs leading-tight" style={{ color: '#737373' }}>
+                <span
+                  className="text-xs leading-tight"
+                  style={{ color: brand.colors.gray }}
+                >
                   Full Digital Solution
                 </span>
               </div>

@@ -1,5 +1,6 @@
 import { client, isSanityConfigured } from '@/sanity/lib/client';
-import { urlFor } from '@/sanity/lib/image';
+import { isImageBuilderReady, urlFor } from '@/sanity/lib/image';
+import { aboutQuery } from '@/sanity/lib/queries';
 import Image from 'next/image';
 
 // Default content when Sanity is not configured
@@ -7,7 +8,7 @@ const defaultAbout = {
   title: 'À propos de FDS',
   subtitle: 'Votre partenaire digital au Burkina Faso',
   overview: 'FDS (Full Digital Solution) est une entreprise burkinabè spécialisée dans le développement de solutions digitales sur mesure. Nous accompagnons les entreprises et organisations dans leur transformation digitale avec des services adaptés à leurs besoins.',
-  mission: 'Démocratiser l\'accès aux technologies digitales pour les entreprises africaines et contribuer au développement économique du Burkina Faso através de l\'innovation numérique.',
+  mission: 'Démocratiser l\'accès aux technologies digitales pour les entreprises africaines et contribuer au développement économique du Burkina Faso à travers l\'innovation numérique.',
   values: [
     'Innovation',
     'Excellence',
@@ -29,18 +30,7 @@ export default async function AboutPage() {
 
   if (sanityReady) {
     try {
-      const data = await client!.fetch(`*[_type == "about"][0] {
-        title,
-        subtitle,
-        overview,
-        mission,
-        values,
-        approachTitle,
-        approachDescription,
-        founderName,
-        founderRole,
-        founderImage
-      }`);
+      const data = await client!.fetch(aboutQuery);
       
       if (data) {
         about = { ...defaultAbout, ...data };
@@ -53,7 +43,7 @@ export default async function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden pt-20">
+      <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
         
         {/* Hero Background Image */}
@@ -206,7 +196,7 @@ export default async function AboutPage() {
             </div>
             <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20">
               <div className="flex flex-col md:flex-row items-center gap-8">
-                {about.founderImage && (
+                {about.founderImage && isImageBuilderReady() && (
                   <div className="relative">
                     <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-white/50 shadow-2xl">
                       <Image

@@ -1,7 +1,34 @@
 import { client, isSanityConfigured } from '@/sanity/lib/client';
+import {
+  featuredTestimonialsQuery,
+  homePageQuery,
+  servicesQuery,
+} from '@/sanity/lib/queries';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
+
+interface HomeContent {
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+interface ServiceItem {
+  _id: string;
+  title: string;
+  description: string;
+}
+
+interface TestimonialItem {
+  _id: string;
+  name: string;
+  company?: string;
+  role?: string;
+  content: string;
+  rating?: number;
+  imageUrl?: string;
+}
 
 export const metadata: Metadata = {
   title: 'Accueil | FDS - Full Digital Solution',
@@ -16,25 +43,25 @@ export const metadata: Metadata = {
 
 // Default content when Sanity is not configured
 const defaultContent = {
-  title: 'Full Digital Solution',
-  subtitle: 'Transformez votre entreprise avec des solutions digitales innovantes',
-  description: 'Nous concevons des solutions digitales sur mesure pour propulser votre entreprise au Burkina Faso et en Afrique de l\'Ouest.',
+  title: 'FDS',
+  subtitle: 'Full Digital Solution',
+  description: 'Nous créons des logiciels sur mesure...',
 };
 
 export default async function Home() {
   // Check if Sanity is configured
   const sanityReady = isSanityConfigured() && client;
   
-  let home = defaultContent;
-  let services: unknown[] = [];
-  let testimonials: unknown[] = [];
+  let home: HomeContent = defaultContent;
+  let services: ServiceItem[] = [];
+  let testimonials: TestimonialItem[] = [];
 
   if (sanityReady) {
     try {
       const [homeData, servicesData, testimonialsData] = await Promise.all([
-        client!.fetch(`*[_type == "homePage"][0]`),
-        client!.fetch(`*[_type == "service"]`),
-        client!.fetch(`*[_type == "testimonial" && featured == true] | order(_createdAt desc)`),
+        client!.fetch(homePageQuery),
+        client!.fetch(servicesQuery),
+        client!.fetch(featuredTestimonialsQuery),
       ]);
       
       if (homeData) home = homeData;
@@ -63,12 +90,14 @@ export default async function Home() {
         </div>
         
         <div className="relative max-w-5xl mx-auto px-4 text-center animate-fade-in-up">
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-fds-gradient mb-6 tracking-tight">
             {home.title}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
-            {home.subtitle}
-          </p>
+          {home.subtitle && (
+            <p className="text-xl md:text-2xl text-fds-gray max-w-3xl mx-auto mb-6 leading-relaxed font-medium">
+              {home.subtitle}
+            </p>
+          )}
           
           {/* Hero Feature Images */}
           <div className="grid grid-cols-3 gap-4 mb-10 max-w-2xl mx-auto">
@@ -101,13 +130,13 @@ export default async function Home() {
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Link
               href="/contact"
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="btn-fds-primary font-semibold py-4 px-10 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Discutons de votre projet
             </Link>
             <Link
               href="/portfolio"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-4 px-10 rounded-full transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+              className="border-2 border-fds-blue text-fds-blue hover:bg-fds-blue hover:text-white font-semibold py-4 px-10 rounded-full transition-all shadow-md hover:shadow-lg transform hover:scale-105"
             >
               Voir nos réalisations
             </Link>
@@ -130,7 +159,7 @@ export default async function Home() {
             Nos Services
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service: any, index: number) => (
+            {services.map((service, index) => (
               <div
                 key={service._id}
                 className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-lg hover:shadow-2xl transition-all group hover:scale-105 animate-fade-in-up"
@@ -186,7 +215,7 @@ export default async function Home() {
               Ils nous font confiance
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {testimonials.map((testimonial: any, index: number) => (
+              {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial._id}
                   className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-lg hover:shadow-2xl transition-all group hover:scale-105 animate-fade-in-up"
@@ -213,10 +242,10 @@ export default async function Home() {
 
                   {/* Author */}
                   <div className="flex items-center">
-                    {testimonial.image && (
+                    {testimonial.imageUrl && (
                       <div className="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
                         <Image
-                          src={testimonial.image.asset.url + '?w=48&h=48&fit=crop'}
+                          src={`${testimonial.imageUrl}?w=48&h=48&fit=crop`}
                           alt={testimonial.name}
                           width={48}
                           height={48}

@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FDS — Full Digital Solution
 
-## Getting Started
+Site vitrine de FDS (Burkina Faso) : Next.js 16, Tailwind CSS 4, Sanity CMS.
 
-First, run the development server:
+## Prérequis
+
+- Node.js 20+
+- [pnpm](https://pnpm.io/) (recommandé) ou npm
+
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local
+# Renseigner les variables dans .env.local
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000). Studio Sanity : [http://localhost:3000/studio](http://localhost:3000/studio).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables d'environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Voir [.env.example](.env.example). Minimum pour le CMS :
 
-## Learn More
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
 
-To learn more about Next.js, take a look at the following resources:
+Pour le **formulaire de contact**, configurer **l'une** des options :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Resend** : `RESEND_API_KEY` + `CONTACT_EMAIL_TO`
+2. **Sanity** : `SANITY_AUTH_TOKEN` (token avec droits d'écriture) — les messages sont stockés comme `contactSubmission`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Sans l'une de ces options, le formulaire renvoie une erreur 503 (comportement volontaire).
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Commande      | Description        |
+|---------------|--------------------|
+| `pnpm dev`    | Serveur de dev     |
+| `pnpm build`  | Build production   |
+| `pnpm start`  | Serveur production |
+| `pnpm lint`   | ESLint             |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Structure
+
+- `src/app/` — pages et routes API
+- `src/app/studio/schemas/` — schémas Sanity
+- `src/sanity/lib/` — client, requêtes GROQ, images
+- `src/lib/blog-posts.ts` — articles de blog (statiques)
+- `public/images/` — assets statiques
+
+## Déploiement
+
+Compatible Vercel. Définir les variables d'environnement dans le dashboard. Mettre à jour `NEXT_PUBLIC_SITE_URL` et le `metadataBase` dans `src/app/layout.tsx` avec votre domaine final.
+
+## Logo
+
+Logo officiel : `public/images_logo/fds-logo.jpeg` (charte `#035ABC` / `#737373`). Configuration centralisée dans `src/lib/brand.ts`. Site de référence : [fds-website-ashen.vercel.app](https://fds-website-ashen.vercel.app/).

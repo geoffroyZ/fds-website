@@ -12,7 +12,7 @@ export const client = isSanityConfigured()
   ? createClient({
       projectId,
       dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-      apiVersion: '2025-04-06',
+      apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-04-06',
       useCdn: true,
     })
   : null;

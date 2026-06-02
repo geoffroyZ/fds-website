@@ -54,7 +54,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="pt-20 px-6 pb-16 max-w-6xl mx-auto">
+      <div className="px-6 pb-16 max-w-6xl mx-auto">
         <div className="text-center mb-12 animate-fade-in-up">
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
             Contactez-nous

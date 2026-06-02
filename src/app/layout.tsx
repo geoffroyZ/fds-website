@@ -2,8 +2,10 @@ import { Poppins } from 'next/font/google';
 import Header from './components/Header';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import NavigationLoader from './components/NavigationLoader';
-import LoadingOverlay from './components/LoadingOverlay';
+import { brand } from '@/lib/brand';
 import "./globals.css";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || brand.siteUrl;
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,18 +25,18 @@ export const metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://fds-website.vercel.app'),
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'FDS - Full Digital Solution | Solutions Digitales au Burkina Faso',
     description: 'Création de sites web, applications mobiles et solutions digitales sur mesure au Burkina Faso.',
-    url: 'https://fds-website.vercel.app',
+    url: siteUrl,
     siteName: 'FDS - Full Digital Solution',
     images: [
       {
-        url: '/images_logo/fds logo.jpeg',
+        url: brand.logo.src,
         width: 1200,
         height: 630,
         alt: 'FDS - Full Digital Solution Logo',
@@ -47,7 +49,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'FDS - Full Digital Solution | Solutions Digitales au Burkina Faso',
     description: 'Création de sites web, applications mobiles et solutions digitales sur mesure au Burkina Faso.',
-    images: ['/images_logo/fds logo.jpeg'],
+    images: [brand.logo.src],
   },
   robots: {
     index: true,
@@ -61,7 +63,6 @@ export const metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code',
   },
 };
 
@@ -73,7 +74,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${poppins.variable} font-sans antialiased`}>
-        <LoadingOverlay />
         <NavigationLoader />
         <GoogleAnalytics />
         <Header />

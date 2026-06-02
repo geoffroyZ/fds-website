@@ -1,4 +1,5 @@
 import { client, isSanityConfigured } from '@/sanity/lib/client';
+import { teamMembersQuery } from '@/sanity/lib/queries';
 import Image from 'next/image';
 import { Metadata } from 'next';
 
@@ -23,6 +24,7 @@ interface TeamMember {
       url: string;
     };
   };
+  imageUrl?: string;
   skills?: string[];
   linkedin?: string;
   email?: string;
@@ -33,7 +35,7 @@ async function getTeamMembers(): Promise<TeamMember[]> {
     return [];
   }
   try {
-    return await client.fetch(`*[_type == "teamMember"] | order(order asc)`);
+    return await client.fetch(teamMembersQuery);
   } catch {
     return [];
   }
@@ -90,7 +92,7 @@ export default async function TeamPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden pt-20">
+      <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
@@ -108,7 +110,13 @@ export default async function TeamPage() {
       {/* Team Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {members.map((member, index) => (
+          {members.map((member, index) => {
+            const avatarUrl =
+              'imageUrl' in member && member.imageUrl
+                ? member.imageUrl
+                : member.image?.asset?.url;
+
+            return (
             <div
               key={member._id}
               className="group relative overflow-hidden backdrop-blur-xl bg-white/60 rounded-3xl shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-500 animate-fade-in-up"
@@ -116,9 +124,9 @@ export default async function TeamPage() {
             >
               {/* Avatar */}
               <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600">
-                {member.image ? (
+                {avatarUrl ? (
                   <Image
-                    src={member.image.asset.url + '?w=400&h=400&fit=crop'}
+                    src={`${avatarUrl}?w=400&h=400&fit=crop`}
                     alt={member.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -182,7 +190,8 @@ export default async function TeamPage() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Join Team CTA */}

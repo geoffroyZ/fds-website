@@ -1,4 +1,5 @@
 import { client, isSanityConfigured } from '@/sanity/lib/client';
+import { projectsQuery } from '@/sanity/lib/queries';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -26,6 +27,7 @@ interface Project {
       url: string;
     };
   };
+  imageUrl?: string;
 }
 
 // Default projects when Sanity is not configured
@@ -79,15 +81,7 @@ export default async function PortfolioPage() {
 
   if (sanityReady) {
     try {
-      const data = await client!.fetch(`*[_type == "project"] | order(_createdAt desc) {
-        _id,
-        title,
-        shortDescription,
-        category,
-        demoUrl,
-        githubUrl,
-        mainImage
-      }`);
+      const data = await client!.fetch(projectsQuery);
       
       if (data && data.length > 0) {
         projects = data;
@@ -100,7 +94,7 @@ export default async function PortfolioPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden pt-20">
+      <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
@@ -132,16 +126,20 @@ export default async function PortfolioPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project: any, index: number) => (
+            {projects.map((project, index) => {
+              const imageSrc =
+                project.imageUrl ||
+                project.mainImage?.asset?.url;
+              return (
               <div
                 key={project._id || index}
                 className="group relative overflow-hidden backdrop-blur-xl bg-white/60 rounded-3xl shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-500 animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {project.mainImage && (
+                {imageSrc && (
                   <div className="relative h-64 w-full overflow-hidden">
                     <Image
-                      src={project.mainImage.asset.url + '?w=400&h=300&fit=crop'}
+                      src={imageSrc.includes('?') ? imageSrc : `${imageSrc}?w=400&h=300&fit=crop`}
                       alt={project.title}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -193,7 +191,8 @@ export default async function PortfolioPage() {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

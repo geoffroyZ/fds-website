@@ -21,7 +21,7 @@ export default function NavigationLoader() {
   return (
     <div className="fixed top-16 left-0 right-0 z-[9999]">
       <div className="h-1 bg-gray-200">
-        <div className="h-full bg-gradient-to-r from-blue-600 to-purple-600 animate-loading-bar"></div>
+        <div className="h-full bg-gradient-to-r from-fds-blue to-sky-500 animate-loading-bar"></div>
       </div>
       
       <style jsx>{`
